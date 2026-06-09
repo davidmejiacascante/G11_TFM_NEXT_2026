@@ -1,0 +1,69 @@
+
+=== status of employment ===
+status of employment
+1     828
+2    1990
+3      25
+4      56
+5      36
+6       7
+7       6
+8      10
+9      95
+
+=== field of work ===
+field of work
+1     2417
+2      375
+3      124
+4       12
+5        4
+6        8
+7        3
+8        5
+9       43
+11      30
+12       3
+13      18
+14       9
+15       2
+
+=== federal state ===
+federal state
+1     320
+2     691
+3     126
+4     139
+5       6
+6      54
+7     196
+8      38
+9     417
+10    437
+11     63
+12      8
+13    212
+14     57
+15    275
+16     14
+
+=== community size ===
+community size
+1    967
+2    629
+3    485
+4    972
+
+=== gender ===
+gender
+1     620
+2    2433
+
+=== income ===
+income
+1    443
+2    956
+3    782
+4    417
+5    241
+6    214

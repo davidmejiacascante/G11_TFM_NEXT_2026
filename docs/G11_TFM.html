@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="David Francisco Mejía Cascante">
+  <meta name="description" content="Trabajo Final de Graduación para el Master in Big Data & Business Intelligence de Next Educación 2026.">
+  <meta name="keywords" content="España,Costa Rica,TFM,next,master,big data,business intelligence,2026,HTML,CSS,JavaScript">
+  <title>BurnOutGuard G11 TFM Next Educación 2026</title>
+
+  <style>
+    :root {
+      --primary: #10233f;
+      --secondary: #d71920;
+      --accent: #f4f6f8;
+      --text: #1f2933;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --white: #ffffff;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --nav-width: 20%;
+      --body-width: 80%;
+      --radius: 14px;
+      --transition: 180ms ease;
+      --footer-height: 56px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding-bottom: var(--footer-height);
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--accent);
+      line-height: 1.6;
+    }
+
+    .layout { display: flex; min-height: calc(100vh - var(--footer-height)); }
+
+    .sidebar {
+      width: var(--nav-width);
+      min-width: 260px;
+      height: calc(100vh - var(--footer-height));
+      position: sticky;
+      top: 0;
+      background: var(--primary);
+      color: var(--white);
+      padding: 24px 18px;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo { width: 120px; height: 48px; object-fit: contain; display: block; flex: 0 0 auto; }
+    .logo-top { margin-bottom: 22px; }
+    .logo-bottom { margin-top: auto; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.16); }
+
+    .brand { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.16); flex: 0 0 auto; }
+    .brand-title { margin: 0; font-size: 1.25rem; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; }
+    .brand-subtitle { margin: 8px 0 0; color: rgba(255,255,255,0.72); font-size: 0.875rem; }
+
+    .sidebar nav { overflow-y: auto; padding-bottom: 22px; flex: 1 1 auto; }
+    .nav-list { list-style: none; padding: 0; margin: 0; }
+    .nav-group { margin-bottom: 8px; }
+
+    .nav-main {
+      width: 100%; border: 0; background: transparent; color: var(--white);
+      text-align: left; cursor: pointer; padding: 12px 14px; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 700; transition: background var(--transition), color var(--transition);
+    }
+    .nav-main:hover, .nav-main.active { background: var(--secondary); color: var(--white); }
+
+    .nav-sublist { display: none; list-style: none; padding: 6px 0 8px 12px; margin: 0; border-left: 2px solid rgba(255,255,255,0.16); }
+    .nav-group.open .nav-sublist { display: block; }
+
+    .nav-subitem {
+      display: block; width: 100%; border: 0; background: transparent;
+      color: rgba(255,255,255,0.76); text-align: left; cursor: pointer;
+      padding: 7px 10px; border-radius: 8px; font-size: 0.84rem;
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-subitem:hover, .nav-subitem.active { background: rgba(255,255,255,0.1); color: var(--white); }
+    .level-2 { padding-left: 10px; font-weight: 600; }
+    .level-3 { padding-left: 22px; font-size: 0.8rem; }
+    .level-4 { padding-left: 34px; font-size: 0.76rem; color: rgba(255,255,255,0.64); }
+
+    .content { width: var(--body-width); padding: 44px; }
+    .content-inner { max-width: 980px; margin: 0 auto; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary), #203a63);
+      color: var(--white); border-radius: var(--radius);
+      padding: 48px; margin-bottom: 34px; box-shadow: var(--shadow);
+    }
+    .hero h1 { margin-top: 0; color: var(--white); font-size: clamp(2rem,4vw,3.5rem); line-height: 1.05; letter-spacing: -0.04em; }
+    .hero p { max-width: 720px; color: rgba(255,255,255,0.78); font-size: 1.1rem; }
+
+    section { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 36px; margin-bottom: 28px; border: 1px solid var(--border); }
+
+    h1, h2, h3, h4 { scroll-margin-top: 32px; color: var(--primary); line-height: 1.2; }
+    h1 { font-size: 2.2rem; margin: 0 0 20px; letter-spacing: -0.03em; }
+    h2 { font-size: 1.55rem; margin-top: 32px; border-left: 5px solid var(--secondary); padding-left: 12px; }
+    h3 { font-size: 1.2rem; margin-top: 26px; }
+    h4 { font-size: 1rem; margin-top: 20px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    p { margin: 0 0 16px; }
+
+    ul { padding-left: 1.4em; margin: 0 0 16px; }
+    ul li { margin-bottom: 6px; }
+
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.9rem; }
+    th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+    tr:nth-child(even) td { background: #f8fafc; }
+
+    code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.88em; }
+    pre { background: #f1f5f9; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 0.88em; margin: 0 0 16px; }
+
+    .tag { display: inline-block; background: rgba(215,25,32,0.1); color: var(--secondary); padding: 4px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; margin-bottom: 12px; }
+
+    .site-footer {
+      position: fixed; left: 0; bottom: 0; width: 100%; height: var(--footer-height);
+      background: var(--primary); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; font-size: 0.875rem; border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    @media (max-width: 900px) {
+      .layout { display: block; }
+      .sidebar { width: 100%; min-width: 0; height: auto; max-height: calc(45vh - var(--footer-height)); position: sticky; top: 0; z-index: 10; }
+      .logo-bottom { display: none; }
+      .content { width: 100%; padding: 24px; }
+      .hero, section { padding: 28px; }
+    }
+    @media (max-width: 520px) {
+      .sidebar { padding: 20px 14px; }
+      .content { padding: 16px; }
+      .hero, section { padding: 22px; }
+      h1 { font-size: 1.8rem; }
+      h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Page navigation">
+      <img class="logo logo-top" src="img/logo_Next.png" alt="Top logo" />
+      <div class="brand">
+        <p class="brand-title">Section Navigator</p>
+        <p class="brand-subtitle">Auto-generated from page headings</p>
+      </div>
+      <nav>
+        <ul id="dynamicNav" class="nav-list"></ul>
+      </nav>
+      <img class="logo logo-bottom" src="img/logo_ISABEL_I.png" alt="Bottom logo" />
+    </aside>
+
+    <main class="content">
+      <div class="content-inner">
+
+        <div class="hero">
+          <h1>BurnoutGuard</h1>
+          <p>Sistema de Detección Temprana de Riesgo de Burnout — Trabajo de Fin de Máster · Master in Big Data and Business Intelligence · Next Educación 2026</p>
+          <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;margin-bottom:0;">Daniel Vargas Salazar · David Mejía Cascante · Juan Luis Chávez Mejía · María Cubero Sandoval · Melany Jiménez Nin<br>Director: Belarmino García &nbsp;|&nbsp; Tutor: Mariano Muñoz &nbsp;|&nbsp; Madrid, 18 de junio 2026</p>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ RESUMEN -->
+        <section>
+          <h1>Resumen</h1>
+          <p>El presente Trabajo Final de Máster desarrolla una propuesta de sistema analítico orientado a la detección temprana del riesgo de burnout laboral mediante la integración de técnicas de Business Intelligence, análisis exploratorio de datos, visualización interactiva en Tableau Desktop y modelos supervisados de Machine Learning. El estudio utiliza como fuente principal un dataset de 3181 registros correspondientes a profesionales veterinarios en Alemania, con información sociodemográfica, laboral y psicométrica basada en el Copenhagen Burnout Inventory (CBI).</p>
+          <p>La metodología comprende la recolección, depuración y transformación de datos, el análisis exploratorio, el modelado relacional, el desarrollo de dashboards y la evaluación de modelos predictivos para la clasificación del riesgo de burnout. Los resultados evidencian que la integración de variables laborales, sociodemográficas y psicométricas permite identificar patrones relevantes asociados al agotamiento profesional. En conjunto, BurnoutGuard se plantea como una aproximación viable para apoyar procesos de People Analytics, visualización estratégica y gestión preventiva del bienestar organizacional.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ INTRODUCCIÓN -->
+        <section>
+          <h1>Introducción</h1>
+
+          <h2>Antecedentes</h2>
+          <p>El interés por el estudio del burnout ha aumentado significativamente durante los últimos años debido a las consecuencias observadas tanto en la salud de los trabajadores como en el desempeño organizacional. Diversos estudios han evidenciado que la exposición prolongada a factores de estrés laboral incrementa el riesgo de agotamiento emocional y disminuye la productividad (Maslach et al., 2001; Salvagioni et al., 2017).</p>
+          <p>La Organización Mundial de la Salud (OMS) incorporó oficialmente el burnout dentro de la Clasificación Internacional de Enfermedades (CIE-11) como un fenómeno ocupacional asociado al estrés laboral crónico no gestionado adecuadamente (World Health Organization, 2019). Esta incorporación consolidó el interés académico y empresarial por desarrollar mecanismos de prevención y detección temprana.</p>
+          <p>Paralelamente, el crecimiento de disciplinas como Big Data, Business Intelligence y People Analytics ha permitido que las organizaciones evolucionen hacia modelos de toma de decisiones basados en datos (Davenport et al., 2010; Marler &amp; Boudreau, 2017). En este contexto, las áreas de recursos humanos han comenzado a incorporar herramientas analíticas orientadas a comprender fenómenos relacionados con el desempeño laboral, el bienestar organizacional y la retención del talento.</p>
+          <p>Diversas investigaciones han identificado que profesiones vinculadas con alta carga emocional presentan una mayor prevalencia de agotamiento profesional. Entre estas ocupaciones destaca el gremio veterinario, caracterizado por jornadas extensas, presión emocional, toma constante de decisiones críticas y exposición frecuente a situaciones de desgaste psicológico (Mastenbroek et al., 2014; Moses et al., 2018).</p>
+          <p>La convergencia entre analítica de datos y salud organizacional ha impulsado el desarrollo de investigaciones orientadas a construir sistemas predictivos capaces de identificar riesgos psicosociales antes de que se materialicen en consecuencias operativas severas (Boudreau &amp; Cascio, 2017).</p>
+
+          <h2>Justificación</h2>
+          <p>La relevancia de esta investigación radica en la necesidad de desarrollar mecanismos preventivos que permitan identificar oportunamente factores asociados al burnout. En lugar de actuar cuando las consecuencias ya son visibles, las organizaciones pueden beneficiarse de modelos analíticos que apoyen la toma de decisiones basadas en evidencia.</p>
+          <p>Desde una perspectiva empresarial, la detección tardía del burnout genera costos significativos relacionados con ausentismo, rotación de personal, disminución del rendimiento y deterioro del clima organizacional (Salvagioni et al., 2017). A pesar de ello, numerosas organizaciones continúan utilizando enfoques reactivos basados únicamente en evaluaciones periódicas o intervenciones posteriores al deterioro del bienestar laboral.</p>
+          <p>Más allá del componente psicológico, el burnout tiene una clara dimensión económica para las organizaciones. Desde la teoría del capital humano se entiende que cada empleado representa una inversión específica de la empresa en formación y experiencia, inversión que se deteriora cuando las condiciones laborales producen agotamiento sostenido (Becker, 1964). La teoría de los salarios de eficiencia (Akerlof y Yellen, 1990) concluye que un entorno laboral percibido como injusto o desequilibrado se traduce en menor productividad, mayor rotación voluntaria y un menor retorno sobre la formación entregada.</p>
+          <p>El proyecto BurnoutGuard integra herramientas metodológicas y tecnológicas que combinan procesamiento de datos, análisis exploratorio y modelos supervisados para identificar patrones asociados al riesgo de burnout laboral.</p>
+
+          <h2>Problema de investigación</h2>
+          <p>A pesar de la creciente disponibilidad de información relacionada con el comportamiento laboral de los colaboradores, muchas organizaciones aún carecen de herramientas capaces de transformar estos datos en indicadores preventivos de riesgo psicosocial.</p>
+          <p>El fenómeno del burnout laboral se ha consolidado en la última década como uno de los desafíos más críticos para la salud ocupacional y la gestión de recursos humanos a nivel global (Salvagioni et al., 2017; Maslach &amp; Leiter, 2016). Definido como un fenómeno multidimensional de agotamiento físico, emocional y mental, este síndrome emerge en contextos caracterizados por alta exigencia, sobrecarga sostenida de tareas y condiciones laborales desfavorables.</p>
+          <p>En este contexto, se formula la siguiente pregunta de investigación:</p>
+          <p><strong>¿De qué manera la integración de Business Intelligence y modelos supervisados de Machine Learning puede facilitar la detección temprana del riesgo de burnout laboral mediante el análisis de variables sociodemográficas, laborales y psicométricas de veterinarios en Alemania?</strong></p>
+
+          <h2>Hipótesis</h2>
+          <h3>Hipótesis general</h3>
+          <p>Las variables psicométricas y laborales de los ítems ERI 1-10 y psicométricas de las variables CBI 1-6 facilitan predecir significativamente el riesgo alto de burnout laboral mediante modelos supervisados de Machine Learning.</p>
+          <h3>Hipótesis específicas</h3>
+          <ul>
+            <li>Existe una relación significativa entre jornadas laborales extensas y niveles elevados de burnout.</li>
+            <li>El desequilibrio esfuerzo-recompensa incrementa la probabilidad de agotamiento profesional.</li>
+            <li>Los modelos supervisados están orientados a clasificar el riesgo de burnout con métricas de desempeño estadísticamente aceptables.</li>
+            <li>Las variables demográficas influyen en la prevalencia del burnout dentro del gremio veterinario alemán.</li>
+          </ul>
+
+          <h2>Objetivos de Investigación</h2>
+          <h3>Objetivo general</h3>
+          <p>Desarrollar BurnoutGuard como sistema analítico para la detección temprana del riesgo de burnout laboral mediante la integración de Business Intelligence, análisis exploratorio de datos y modelos supervisados de Machine Learning.</p>
+          <h3>Objetivos específicos</h3>
+          <ul>
+            <li>Seleccionar y depurar datasets relacionados con burnout laboral y variables psicométricas.</li>
+            <li>Analizar variables sociodemográficas, laborales (ERI 1 al 10) y psicológicas (CBI 1 al 6) asociadas al agotamiento profesional.</li>
+            <li>Desarrollar dashboards interactivos mediante Tableau Desktop para una visualización estratégica.</li>
+            <li>Implementar modelos supervisados de Machine Learning para clasificación de riesgo.</li>
+            <li>Evaluar el desempeño predictivo de los modelos mediante métricas de clasificación.</li>
+            <li>Identificar variables relevantes para la predicción del riesgo de burnout.</li>
+            <li>Proponer una arquitectura empresarial escalable para futuras implementaciones organizacionales.</li>
+          </ul>
+
+          <h2>Metodología</h2>
+          <p>Las principales fases metodológicas comprenden:</p>
+          <ul>
+            <li>Recolección y depuración de datos.</li>
+            <li>Transformación y normalización de variables.</li>
+            <li>Análisis exploratorio de datos (EDA).</li>
+            <li>Modelado relacional.</li>
+            <li>Visualización interactiva en Tableau Desktop.</li>
+            <li>Desarrollo de modelos supervisados de Machine Learning.</li>
+            <li>Evaluación comparativa mediante métricas de clasificación.</li>
+          </ul>
+
+          <h2>Marco Teórico</h2>
+          <h3>Conceptualización del Síndrome de Burnout</h3>
+          <p>El burnout debe analizarse como un síndrome multidimensional asociado al entorno laboral. El modelo de burnout propuesto por Maslach y Jackson (1981) describe este fenómeno a partir de tres dimensiones fundamentales: agotamiento emocional, despersonalización y baja realización personal.</p>
+          <p>El agotamiento emocional se refiere al desgaste físico y psicológico derivado de una exposición prolongada a situaciones de estrés laboral; la despersonalización implica el desarrollo de actitudes distantes o negativas hacia otras personas en el entorno de trabajo; mientras que la baja realización personal se manifiesta mediante una percepción negativa sobre el desempeño profesional y los logros alcanzados.</p>
+
+          <h3>Modelos de Estrés Laboral y Riesgo Psicosocial</h3>
+          <p><strong>Modelo de Desequilibrio Esfuerzo-Recompensa (ERI):</strong> Propone que el estrés surge cuando el alto esfuerzo realizado por el trabajador no se corresponde con una recompensa adecuada en términos de salario, reconocimiento profesional o estabilidad laboral (Siegrist, 1996).</p>
+          <p>Diversos estudios señalan la diferencia conceptual entre el análisis teórico del burnout y su manifestación progresiva en contextos laborales reales. Profesionales altamente competentes tienden a normalizar las primeras señales del agotamiento, interpretándolas como episodios temporales, lo que retrasa la identificación del síndrome (Leiter &amp; Maslach, 2016).</p>
+
+          <h3>Diferencia entre estrés laboral y burnout</h3>
+          <table>
+            <thead>
+              <tr><th></th><th>Estrés laboral</th><th>Burnout laboral</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Duración</strong></td><td>Temporal, ligado a un proyecto o periodo</td><td>Crónico, persiste semanas o meses</td></tr>
+              <tr><td><strong>Emoción predominante</strong></td><td>Ansiedad, hiperactivación</td><td>Vacío, desconexión emocional</td></tr>
+              <tr><td><strong>Nivel de energía</strong></td><td>Exceso de activación (nerviosismo)</td><td>Agotamiento total, sin reservas</td></tr>
+              <tr><td><strong>Motivación</strong></td><td>Presente pero desbordada</td><td>Ausente o cinismo activo</td></tr>
+              <tr><td><strong>Recuperación</strong></td><td>Descanso + eliminar el estresor</td><td>Requiere intervención profunda y tiempo</td></tr>
+              <tr><td><strong>Impacto laboral</strong></td><td>Rendimiento fluctuante</td><td>Desvinculación o abandono profesional</td></tr>
+              <tr><td><strong>Relación con otros</strong></td><td>Irritabilidad puntual</td><td>Despersonalización: tratar a compañeros y clientes como objetos</td></tr>
+              <tr><td><strong>Reconocimiento OMS</strong></td><td>Factor de riesgo psicosocial</td><td>Fenómeno ocupacional asociado al estrés laboral crónico no gestionado adecuadamente</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 1 – Comparación entre estrés laboral y Burnout</em></p>
+
+          <h3>Estrategias de prevención</h3>
+          <p>La prevención del burnout requiere la implementación de estrategias organizacionales orientadas al establecimiento de límites laborales saludables. Diversos autores indican la importancia de intervenciones organizacionales que promuevan el equilibrio entre demandas laborales y recursos disponibles, así como una cultura que favorezca el bienestar psicológico de los trabajadores (Maslach &amp; Leiter, 2016).</p>
+
+          <h3>Business Intelligence y Big Data</h3>
+          <p>El uso de Business Intelligence y Big Data en contextos organizacionales permite gestionar grandes volúmenes de datos caracterizados por su volumen, velocidad y variedad, características que exceden las capacidades de los métodos tradicionales de análisis (Laney, 2001). Estas tecnologías facilitan la transformación de datos en conocimiento útil para apoyar la toma de decisiones estratégicas y operativas (Sharda et al., 2023).</p>
+
+          <h2>Alcance y limitaciones</h2>
+          <p>El alcance del estudio se centra en el desarrollo de un sistema analítico dirigido a la detección temprana del riesgo de burnout utilizando técnicas de Business Intelligence y Machine Learning. El proyecto no pretende sustituir evaluaciones clínicas ni diagnósticos psicológicos profesionales.</p>
+          <p>Entre las principales limitaciones destacan:</p>
+          <ul>
+            <li>Dependencia de datasets secundarios.</li>
+            <li>Restricciones asociadas al contexto específico del gremio veterinario alemán.</li>
+            <li>Posibles sesgos derivados de autopercepción en instrumentos psicométricos.</li>
+            <li>Limitaciones de generalización hacia otros sectores laborales.</li>
+          </ul>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ ESTADO DE LA CUESTIÓN -->
+        <section>
+          <h1>Estado de la cuestión</h1>
+
+          <h2>Conceptualización del síndrome de burnout</h2>
+          <p>El síndrome de burnout es un fenómeno ocupacional asociado al estrés laboral crónico no gestionado adecuadamente. Maslach y Jackson (1981) lo definieron como un síndrome psicológico compuesto por agotamiento emocional, despersonalización y disminución de la realización personal. La OMS lo incorporó dentro de la CIE-11, consolidando su reconocimiento como fenómeno ocupacional relevante.</p>
+
+          <h2>Modelos teóricos del estrés laboral</h2>
+          <p>El modelo Job Demands-Resources (JD-R), propuesto por Bakker y Demerouti (2007), establece que el burnout surge cuando las demandas laborales exceden los recursos disponibles para afrontarlas.</p>
+          <p>El modelo Effort-Reward Imbalance (ERI), desarrollado por Siegrist (1996), plantea que el estrés laboral crónico surge cuando el esfuerzo realizado por el trabajador no recibe una recompensa proporcional.</p>
+
+          <h2>Copenhagen Burnout Inventory</h2>
+          <p>El Copenhagen Burnout Inventory (CBI) es uno de los instrumentos psicométricos más utilizados para medir agotamiento profesional. Fue desarrollado por Kristensen et al. (2005) como una alternativa centrada en la fatiga física y psicológica asociada al trabajo. El instrumento evalúa tres dimensiones principales:</p>
+          <ul>
+            <li>Burnout personal.</li>
+            <li>Burnout relacionado con el trabajo.</li>
+            <li>Burnout relacionado con clientes o usuarios.</li>
+          </ul>
+
+          <h2>Burnout en la profesión veterinaria</h2>
+          <p>La profesión de enfermería y medicina veterinaria enfrenta el agotamiento como un problema creciente que afecta directamente el bienestar del personal, la retención de talento y la calidad del servicio clínico y el bienestar animal. Los principales factores de riesgo organizativos identificados son:</p>
+          <ul>
+            <li><strong>Alta carga de trabajo:</strong> Jornadas laborales extensas y picos de presión operativa.</li>
+            <li><strong>Bajo control y autonomía:</strong> Limitada participación en la toma de decisiones clínicas o administrativas.</li>
+            <li><strong>Deficiencias estructurales:</strong> Baja remuneración económica e infrautilización de las capacidades del personal.</li>
+            <li><strong>Clima organizacional adverso:</strong> Incivilidad entre compañeros de equipo y percepción de trato desigual.</li>
+            <li><strong>Desbalance personal:</strong> Mal equilibrio entre la vida laboral y la vida familiar por sobrecarga de turnos.</li>
+            <li><strong>Impacto emocional intrínseco:</strong> Exposición constante al sufrimiento animal, manejo del duelo de los clientes, dilemas éticos y la práctica de la eutanasia.</li>
+          </ul>
+
+          <h2>Business Intelligence y People Analytics</h2>
+          <p>Desde una perspectiva organizacional, Business Intelligence permite transformar grandes volúmenes de datos en información útil para la toma de decisiones. Su aplicación en recursos humanos ha dado origen al enfoque conocido como People Analytics, orientado al análisis sistemático del comportamiento laboral. Tableau Desktop constituye una de las herramientas más utilizadas para análisis visual interactivo debido a sus capacidades de segmentación dinámica y exploración multidimensional.</p>
+
+          <h2>Machine Learning aplicado a salud organizacional</h2>
+          <p>Los modelos de Machine Learning ofrecen la posibilidad de identificar patrones complejos que difícilmente podrían detectarse mediante técnicas estadísticas tradicionales. Entre los algoritmos más utilizados para clasificación destacan:</p>
+          <ul>
+            <li>Regresión logística.</li>
+            <li>Random Forest.</li>
+            <li>Árboles de decisión.</li>
+            <li>Support Vector Machine (SVM).</li>
+            <li>Gradient Boosting.</li>
+          </ul>
+
+          <h2>Visualización de datos organizacionales</h2>
+          <p>La visualización de datos es el proceso de transformar los datos en representaciones visuales que pueden ayudar a explorar, analizar y comunicar información. La visualización puede ayudar a dar sentido a conjuntos de datos grandes y diversos, revelar patrones y tendencias, resaltar valores atípicos y anomalías, y comparar diferentes escenarios. Los dashboards interactivos permiten transformar grandes volúmenes de datos en herramientas accesibles para tomadores de decisiones no técnicos.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ DESARROLLO METODOLÓGICO -->
+        <section>
+          <h1>Desarrollo Metodológico</h1>
+
+          <h2>Diseño de investigación</h2>
+          <p>La investigación utiliza un enfoque cuantitativo no experimental con alcance descriptivo, exploratorio y predictivo. El notebook correspondiente al EDA fue desarrollado utilizando Python como lenguaje principal de programación.</p>
+
+          <h2>Dataset principal y datasets complementarios</h2>
+          <p>El dataset principal utilizado procede de un estudio sobre factores psicosociales, burnout, depresión e ideación suicida en profesionales veterinarios de Alemania, publicado por Schwerdtfeger et al. (2024). El conjunto de datos original estaba compuesto por 3181 registros. Tras la depuración y eliminación de registros con valores inválidos, se obtuvo un conjunto final de 3053 registros válidos.</p>
+          <p>Para las variables ERI se utiliza una escala ordinal de 1 a 4:</p>
+          <table>
+            <thead><tr><th>Valor</th><th>Interpretación</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Totalmente en desacuerdo</td></tr>
+              <tr><td>2</td><td>En desacuerdo</td></tr>
+              <tr><td>3</td><td>De acuerdo</td></tr>
+              <tr><td>4</td><td>Totalmente de acuerdo</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 2 – Etiquetas y valores ERI. Fuente: Adaptado de EMBL-EBI (2024).</em></p>
+
+          <p>Para las variables CBI se utiliza una escala de 1 a 5:</p>
+          <table>
+            <thead><tr><th>Escala original</th><th>Etiqueta</th><th>Escala ajustada</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Siempre</td><td>100</td></tr>
+              <tr><td>2</td><td>A menudo</td><td>75</td></tr>
+              <tr><td>3</td><td>A veces</td><td>50</td></tr>
+              <tr><td>4</td><td>Rara vez</td><td>25</td></tr>
+              <tr><td>5</td><td>Nunca</td><td>0</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 3 – Etiquetas y valores CBI. Fuente: Adaptado de EMBL-EBI (2024).</em></p>
+
+          <p>La variable objetivo <em>Burnout_Score</em> se construye a partir de las variables CBI_01 a CBI_06. Las respuestas del CBI se transforman a una escala estandarizada de 0 a 100. Se calcula el promedio para generar el indicador CBI_SCORE y se aplica el umbral de 50 puntos para la clasificación binaria: igual o superior a 50 = burnout (valor = 1).</p>
+
+          <h2>Flujo de datos</h2>
+          <img class="nav-main" src="img/Arquitectura Cloud.png"/>
+          <p>El modelo de flujo de datos propuesto se estructura alrededor de un proceso periódico de recopilación, transformación, almacenamiento y análisis de información organizacional. Las encuestas CBI/ERI son la fuente base para recopilar información psicométrica. El flujo de procesamiento contempla las siguientes etapas:</p>
+          <ul>
+            <li><strong>Ingesta de datos:</strong> Recolección de encuestas y extracción desde sistemas corporativos mediante procesos batch.</li>
+            <li><strong>Almacenamiento inicial:</strong> Persistencia en Azure Data Lake Storage Gen2 para trazabilidad y auditoría.</li>
+            <li><strong>Transformación y limpieza:</strong> Validación, normalización y depuración con Azure DataBricks y procesos ETL/ELT.</li>
+            <li><strong>Capa analítica:</strong> Construcción de datasets curados para análisis organizacional.</li>
+            <li><strong>Modelado predictivo:</strong> Ejecución de modelos supervisados de Machine Learning.</li>
+            <li><strong>Visualización y consumo:</strong> Publicación de resultados mediante dashboards interactivos en Tableau.</li>
+            <li><strong>Inferencia y monitoreo:</strong> Generación periódica de predicciones y monitoreo continuo del modelo.</li>
+          </ul>
+
+          <h2>Preparación y transformación de datos</h2>
+          <h3>Análisis Exploratorio de Datos</h3>
+          <p>El EDA corresponde a la revisión estructurada inicial del conjunto de datos previa al modelado predictivo. Su propósito consiste en comprender la estructura, calidad, distribuciones, relaciones y limitaciones de los datos.</p>
+          <p>Dentro del notebook desarrollado, el EDA busca responder las siguientes preguntas operativas:</p>
+          <ul>
+            <li>¿El conjunto de datos carga correctamente?</li>
+            <li>¿Qué columnas existen y qué tipos de datos identifica pandas?</li>
+            <li>¿Existen valores faltantes o valores centinela inválidos?</li>
+            <li>¿Cuál es el nivel de desbalance de la variable Burnout_Score?</li>
+            <li>¿Qué variables son numéricas, categóricas codificadas o potencialmente susceptibles a fuga de información?</li>
+            <li>¿Qué patrones visuales pueden apoyar etapas posteriores del análisis?</li>
+          </ul>
+          <table>
+            <thead><tr><th>Paso</th><th>Sección del Notebook</th><th>Propósito</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Setup – Importar librerías</td><td>Importar bibliotecas necesarias como pandas, numpy, matplotlib, seaborn, os y json.</td></tr>
+              <tr><td>2</td><td>Configuración</td><td>Definir rutas de entrada y salida, variable objetivo (Burnout_Score) y listas de columnas categóricas, ERI y CBI.</td></tr>
+              <tr><td>3</td><td>Mapeo de valores</td><td>Crear el diccionario valores_cbi para transformar los valores originales del cuestionario CBI a una escala estandarizada de 0 a 100.</td></tr>
+              <tr><td>4</td><td>Cargar los datos</td><td>Importar el dataset desde el archivo CSV y validar la carga inicial.</td></tr>
+              <tr><td>5</td><td>Limpieza y transformación de datos</td><td>Convertir tipos de datos, reemplazar valores inválidos por np.nan, eliminar columnas irrelevantes y renombrar variables.</td></tr>
+              <tr><td>6</td><td>Eliminar valores faltantes</td><td>Generar el DataFrame limpio df_clean eliminando filas con valores faltantes.</td></tr>
+              <tr><td>7</td><td>Variable objetivo</td><td>Construir la variable objetivo Burnout_Score mediante el cálculo del promedio CBI_SCORE y la clasificación binaria utilizando 50 puntos como umbral de burnout.</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 4 – Pasos del proceso EDA. Fuente: elaboración propia.</em></p>
+
+          <h2>Herramientas tecnológicas</h2>
+          <table>
+            <thead><tr><th>Tecnología / Componente</th><th>Uso en el Proyecto</th><th>Categoría</th></tr></thead>
+            <tbody>
+              <tr><td>Python</td><td>Lenguaje principal para ejecutar el flujo EDA, estructurar la lógica del notebook y coordinar la generación de archivos.</td><td>Entorno base</td></tr>
+              <tr><td>Jupyter Notebook</td><td>Ambiente interactivo para integrar documentación, código, tablas, gráficos y validaciones.</td><td>Ejecución y documentación</td></tr>
+              <tr><td>Pandas</td><td>Biblioteca para lectura de archivos CSV, manipulación tabular, generación de resúmenes y exportación de reportes.</td><td>Manipulación de datos</td></tr>
+              <tr><td>NumPy</td><td>Biblioteca para el manejo de valores faltantes y operaciones numéricas.</td><td>Cómputo numérico</td></tr>
+              <tr><td>Matplotlib</td><td>Biblioteca base para generación y almacenamiento de visualizaciones.</td><td>Visualización</td></tr>
+              <tr><td>Seaborn</td><td>Biblioteca para visualización estadística avanzada y mejora de legibilidad gráfica.</td><td>Visualización</td></tr>
+              <tr><td>scikit-learn / sklearn</td><td>Biblioteca utilizada en las etapas posteriores del proyecto para modelos supervisados y clustering.</td><td>Aprendizaje automático</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 5 – Librerías utilizadas. Fuente: elaboración propia.</em></p>
+
+          <h2>Desarrollo de dashboards en Tableau</h2>
+          <img class="nav-main" src="img/logo_tableau.svg"/>
+          <p>Los dashboards desarrollados permiten:</p>
+          <ul>
+            <li>Segmentación dinámica.</li>
+            <li>Análisis geográfico.</li>
+            <li>Análisis demográfico.</li>
+            <li>Exploración multidimensional.</li>
+            <li>Monitoreo de indicadores asociados al burnout.</li>
+          </ul>
+
+          <h2>Modelos de Machine Learning</h2>
+          <p>Dado que la variable objetivo corresponde a una clasificación binaria derivada del umbral de 50 puntos del CBI_SCORE y considerando los tipos de datos mixtos, dimensionalidad moderada y posibles efectos de interacción, se seleccionaron tres algoritmos supervisados:</p>
+          <ul>
+            <li>Regresión logística.</li>
+            <li>Random Forest.</li>
+            <li>Support Vector Machine (SVM).</li>
+          </ul>
+
+          <h3>Variables utilizadas en el modelo completo</h3>
+          <p>La configuración final del modelo incorpora variables provenientes de tres dimensiones principales: factores psicométricos, variables laborales y características sociodemográficas. Para el entrenamiento se utilizaron los ítems ERI_1 a ERI_10, los ítems CBI_01 a CBI_06 y las variables <em>age, age_group, working_hours, gender, status_of_employment, field_of_work, community_size</em> e <em>income</em>.</p>
+          <p>Respecto al riesgo de data leakage: las variables CBI forman parte de la información disponible en el conjunto de datos y constituyen indicadores psicométricos válidos para la medición del burnout. Por tanto, su utilización no implica la incorporación de información futura ni de variables externas al escenario de predicción considerado. Sin embargo, esta dependencia debe tenerse en cuenta al interpretar los resultados obtenidos.</p>
+
+          <h3>División de datos y preprocesamiento dentro del pipeline</h3>
+          <p>Los datos fueron divididos en conjuntos de entrenamiento, validación y prueba mediante una partición estratificada. El preprocesamiento se implementó mediante las clases Pipeline y ColumnTransformer de Scikit-learn, garantizando que todas las transformaciones fueran ejecutadas exclusivamente sobre los datos de entrenamiento y aplicadas de forma consistente a los conjuntos de validación y prueba.</p>
+          <p>Las variables numéricas fueron imputadas utilizando la mediana, mientras que las variables categóricas fueron imputadas mediante la moda. Posteriormente, las variables categóricas fueron transformadas mediante One-Hot Encoding. En los modelos de Regresión Logística y SVM se aplicó estandarización mediante StandardScaler.</p>
+
+          <h3>Entrenamiento y optimización de modelos</h3>
+          <p>Se evaluaron tres algoritmos de clasificación supervisada: Random Forest, Regresión Logística y SVM. La optimización de hiperparámetros se realizó mediante GridSearchCV, utilizando validación cruzada estratificada. La métrica principal empleada para la selección de hiperparámetros fue la balanced accuracy.</p>
+          <p>Una vez identificada la configuración óptima de hiperparámetros para cada algoritmo, se llevó a cabo un proceso adicional de optimización del umbral de clasificación utilizando el conjunto de validación, seleccionándose aquel que maximizó la métrica balanced accuracy.</p>
+
+          <h3>Evaluación del desempeño e importancia de variables</h3>
+          <p>El desempeño de los modelos se evaluó mediante las métricas accuracy, balanced accuracy, precisión (precision), exhaustividad (recall) y puntuación F1 (F1-score) para ambas clases de la variable objetivo.</p>
+          <p>Adicionalmente, se calculó la importancia por permutación (Permutation Feature Importance) con el objetivo de analizar la contribución individual de cada variable al desempeño predictivo del modelo.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ ANÁLISIS Y RESULTADOS -->
+        <section>
+          <h1>Análisis y resultados</h1>
+
+          <h2>Análisis Univariante del EDA</h2>
+          <p>Inicialmente, se analizó la distribución individual de cada variable numérica con el propósito de comprender su rango, tendencia central y dispersión mediante histogramas.</p>
+          <img class="nav-main" src="../python-TFM/data/reports/EDA_distribuciones_numericas.png"/>
+          <p><strong>Distribuciones de las variables ERI:</strong> Estas características tienen rangos de 1 a 4. La mayoría de las distribuciones muestran una ligera asimetría negativa o picos en valores más altos, sugiriendo que los veterinarios tienden a reportar puntajes más bajos en factores de esfuerzo.</p>
+          <p><strong>Distribuciones de CBI:</strong> Estas características, después de la transformación a puntaje, tienen un rango de 0 a 100. Muchas de estas distribuciones muestran asimetría positiva o picos en valores más bajos, lo que sugiere que una parte de la población no experimenta niveles elevados de burnout.</p>
+          <p><strong>Edad y Horas de Trabajo:</strong> Ambas variables presentan una distribución más cercana a la normal, con una ligera asimetría.</p>
+
+          <h3>Balance de la Variable Objetivo</h3>
+          <img class="nav-main" src="../python-TFM/data/reports/EDA_distribucion_objetivo.png"/>
+          <p>La variable <em>Burnout_Score</em> es ligeramente desbalanceada (53.39% 'Burnout'). Indica que la población de veterinarios estudiada tiene una proporción significativa de individuos en estado de burnout, lo cual es relevante dado el contexto de salud ocupacional. El leve desbalance debe ser considerado en el modelado.</p>
+
+          <h3>Valores Faltantes e Inválidos</h3>
+          <p>Mediante el uso de la biblioteca Pandas se identificó la ausencia de valores faltantes estándar dentro del archivo CSV original. No obstante, durante el proceso de validación se detectaron 14 registros donde la variable birth year presentaba el valor inválido cero, los cuales fueron excluidos del análisis.</p>
+
+          <h2>Análisis Bivariante del EDA</h2>
+          <p>Se analizaron las relaciones existentes entre variables y su asociación con la variable objetivo Burnout_Score. Se generó un mapa de calor de correlación para identificar la intensidad y dirección de las relaciones lineales entre pares de variables.</p>
+          <img class="nav-main" src="../python-TFM/data/reports/EDA_mapa_de_calor_de_correlaciones.png"/>
+          <p>Se observa multicolinealidad esperada entre las variables CBI entre sí y ERI entre sí, ya que miden constructos relacionados y componentes de los mismos índices.</p>
+          <img class="nav-main" src="../python-TFM/data/reports/EDA_boxplots_CBI.png"/>
+          <p><strong>Columnas CBI:</strong> Todas las columnas CBI muestran correlaciones muy fuertes y positivas con el Burnout_Score, ya que el Burnout_Score se deriva directamente de la escala CBI. Los boxplots exhiben diferencias muy marcadas entre los grupos Burnout_Score negativo y positivo.</p>
+          <p><strong>Columnas ERI:</strong> Las variables ERI muestran correlaciones variadas: ERI_8 (0.32), ERI_10 (0.23), ERI_9 (0.26), ERI_6 (-0.29), ERI_7 (-0.14). Estas correlaciones son de moderadas a débiles.</p>
+          <p><strong>Edad, Ingresos y Horas de Trabajo:</strong> Muestran relaciones lineales débiles con el Burnout_Score (0.07, 0.08 y -0.14 respectivamente). La ausencia de una separación clara entre los grupos indica que estas variables, consideradas de forma individual, tienen un poder predictivo limitado.</p>
+          <p>En resumen, el análisis bivariante confirma que las variables CBI son los factores más influyentes en la clasificación del Burnout_Score. Las variables ERI tienen una influencia moderada a débil. Factores sociodemográficos como la edad, el ingreso y las horas de trabajo muestran relaciones lineales mucho más débiles.</p>
+
+          <h2>Dashboard informativo en Tableau</h2>
+          <p>El objetivo principal del dashboard consiste en analizar la distribución del burnout a partir de variables laborales, demográficas y contextuales para identificar el segmento con el mayor nivel de riesgo y apoyar procesos de toma de decisiones orientados a la prevención organizacional.</p>
+          <p>El dashboard se estructura en cuatro visualizaciones principales:</p>
+          <ul>
+            <li><strong>Vista General:</strong> Cuatro KPIs que permiten comprender la situación general: porcentaje de burnout, total de registros, promedio de edad y promedio de horas trabajadas. Se identificó que los hombres presentan un 13.6% de burnout positivo mientras que las mujeres presentan un 39.7%.</li>
+            <li><strong>Distribución porcentual de los ítems CBI:</strong> Distribución porcentual de las respuestas de los ítems CBI_01 a CBI_06 con filtros interactivos por características demográficas y laborales.</li>
+            <li><strong>Distribución porcentual de los ítems ERI:</strong> Distribución porcentual de los ítems ERI_01 a ERI_10 con filtros interactivos para explorar la percepción de esfuerzo laboral, reconocimiento y recompensas.</li>
+            <li><strong>Historia de los datos:</strong> Historia interactiva con puntos de análisis individual para género, edad, ingresos, tamaño de comunidad, horas trabajadas, área profesional y ubicación geográfica.</li>
+          </ul>
+          <p>Hallazgos relevantes: Bavaria es el estado con más casos de Burnout (22.7%). En el rango de edad de 41 a 55 años se observa el mayor porcentaje de casos positivos. Las personas con mayor carga laboral presentaban menores niveles de burnout.</p>
+
+          <h2>Machine Learning</h2>
+          <h3>Resultados</h3>
+          <p>Los tres algoritmos presentaron un desempeño elevado en el conjunto de prueba:</p>
+          <ul>
+            <li><strong>Random Forest:</strong> balanced accuracy = 0.98. Configuración: max_depth=10, n_estimators=300, min_samples_leaf=1, min_samples_split=10, max_features='log2'.</li>
+            <li><strong>Regresión Logística:</strong> balanced accuracy = 0.996. Configuración: C=100, penalización L2, algoritmo liblinear.</li>
+            <li><strong>SVM:</strong> balanced accuracy = 1. Configuración: C=10, núcleo lineal.</li>
+          </ul>
+          <p>La importancia por permutación evidenció que los ítems del cuestionario CBI aportaron la mayor contribución predictiva en los tres modelos evaluados, resultado consistente con la construcción metodológica de la variable objetivo.</p>
+
+          <h3>Análisis e interpretación</h3>
+          <p>La Regresión Logística y el SVM alcanzaron el mejor desempeño (balanced accuracy de 0.996 y 1 respectivamente). El Random Forest obtuvo 0.98, manteniendo igualmente un nivel de desempeño elevado.</p>
+          <p>El elevado desempeño observado no debe interpretarse como evidencia de que las variables demográficas y laborales, por sí solas, permiten predecir el burnout con niveles similares de precisión. Los resultados reflejan la capacidad de los modelos para identificar patrones presentes en indicadores psicométricos directamente relacionados con la definición de la variable objetivo.</p>
+
+          <h4>Recomendaciones</h4>
+          <p>Interpretar los modelos como herramientas de clasificación automatizada del riesgo elevado de burnout según la escala CBI, y no como modelos predictivos independientes sustentados exclusivamente en variables externas. Se recomienda evitar su utilización como herramienta de diagnóstico clínico. Su aplicación más apropiada corresponde al apoyo analítico dentro de programas de bienestar organizacional y estrategias de People Analytics.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ CONCLUSIONES -->
+        <section>
+          <h1>Conclusiones</h1>
+          <p>Los resultados obtenidos demuestran que es posible aplicar técnicas de analítica de datos para identificar patrones asociados al riesgo de burnout laboral, aportando evidencia sobre el potencial de las herramientas de Business Intelligence y Machine Learning en contextos organizacionales.</p>
+          <p>El EDA permitió comprender en profundidad la estructura del conjunto de datos, la distribución de las variables principales y las relaciones existentes con la variable objetivo Burnout_Score. Los ítems pertenecientes al CBI y determinadas variables asociadas al modelo ERI constituyen los predictores más influyentes del riesgo de burnout.</p>
+          <p>Dentro de los modelos evaluados, Support Vector Machine presentó los mejores resultados de clasificación bajo las métricas analizadas, particularmente en términos de precisión y capacidad de generalización.</p>
+          <p>BurnoutGuard, en su forma actual, no es un sistema de aplicación universal. Su capacidad predictiva depende estructuralmente de la disponibilidad simultánea de tres categorías de variables: psicométricas (CBI/ERI), sociodemográficas y laborales documentadas de forma sistemática.</p>
+          <p>Como línea de investigación futura, resulta pertinente desarrollar modelos alternativos basados en las variables del cuestionario ERI, con el fin de analizar su capacidad explicativa y comparar sus resultados con los obtenidos mediante la variable objetivo derivada del CBI. Asimismo, se recomienda explorar la construcción de una variable objetivo multidimensional que integre factores psicométricos, laborales y sociodemográficos.</p>
+          <p>Finalmente, la investigación evidenció una diferencia entre el objetivo inicial del estudio y el alcance efectivo de los modelos desarrollados. Futuras investigaciones deberán evaluar modelos alternativos que excluyan los ítems CBI o incorporen variables objetivo construidas a partir de múltiples dimensiones, con el fin de estimar con mayor precisión la capacidad predictiva independiente de los factores laborales, sociodemográficos y psicosociales asociados al burnout.</p>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ BIBLIOGRAFÍA -->
+        <section>
+          <h1>Bibliografía</h1>
+          <ul style="line-height:2;">
+            <li>Akerlof, G. A., &amp; Yellen, J. L. (1990). The fair wage-effort hypothesis and unemployment. <em>The Quarterly Journal of Economics, 105</em>(2), 255–283. https://doi.org/10.2307/2937787</li>
+            <li>Bakker, A. B., &amp; Demerouti, E. (2007). The job demands-resources model: State of the art. <em>Journal of Managerial Psychology, 22</em>(3), 309–328. https://doi.org/10.1108/02683940710733115</li>
+            <li>Becker, G. S. (1964). <em>Human capital: A theoretical and empirical analysis, with special reference to education.</em> National Bureau of Economic Research.</li>
+            <li>Boudreau, J. W., &amp; Cascio, W. F. (2017). Human capital analytics: Why are we not there? <em>Journal of Organizational Effectiveness: People and Performance, 4</em>(2), 119–126. https://doi.org/10.1108/JOEPP-03-2017-0021</li>
+            <li>Chapman, A. J., Rohlf, V. I., Moser, A. Y., &amp; Bennett, P. C. (2024). Factores organizativos que afectan al agotamiento en enfermeros veterinarios: una revisión sistemática. <em>Anthrozoös, 37</em>(4), 651–686. https://doi.org/10.1080/08927936.2024.2333161</li>
+            <li>Claessens, B. J. C., Van Eerde, W., Rutte, C. G., &amp; Roe, R. A. (2007). A review of the time management literature. <em>Personnel Review, 36</em>(2), 255–276. https://doi.org/10.1108/00483480710726136</li>
+            <li>Davenport, T. H., Harris, J., &amp; Shapiro, J. (2010). Competing on talent analytics. <em>Harvard Business Review, 88</em>(10), 52–58.</li>
+            <li>European Bioinformatics Institute. (2024). <em>S-EPMC11421818</em> [Dataset]. BioStudies. https://www.ebi.ac.uk/biostudies/europepmc/studies/S-EPMC11421818</li>
+            <li>Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</li>
+            <li>Hassard, J., Teoh, K. R. H., Visockaite, G., Dewe, P., &amp; Cox, T. (2018). The cost of work-related stress to society: A systematic review. <em>Journal of Occupational Health Psychology, 23</em>(1), 1–17. https://doi.org/10.1037/ocp0000069</li>
+            <li>Hatch, P. H., Winefield, H. R., Christie, B. A., &amp; Lievaart, J. J. (2011). Workplace stress, mental health, and burnout of veterinarians in Australia. <em>Australian Veterinary Journal, 89</em>(11), 460–468. https://doi.org/10.1111/j.1751-0813.2011.00833.x</li>
+            <li>Kristensen, T. S., Borritz, M., Villadsen, E., &amp; Christensen, K. B. (2005). The Copenhagen Burnout Inventory: A new tool for the assessment of burnout. <em>Work &amp; Stress, 19</em>(3), 192–207. https://doi.org/10.1080/02678370500297720</li>
+            <li>Laney, D. (2001). <em>3D data management: Controlling data volume, velocity and variety.</em> META Group Research Note.</li>
+            <li>Leiter, M. P., &amp; Maslach, C. (2016). <em>Burnout at work: A psychological perspective.</em> Psychology Press.</li>
+            <li>Marler, J. H., &amp; Boudreau, J. W. (2017). An evidence-based review of HR Analytics. <em>The International Journal of Human Resource Management, 28</em>(1), 3–26. https://doi.org/10.1080/09585192.2016.1244699</li>
+            <li>Maslach, C., Schaufeli, W. B., &amp; Leiter, M. P. (2001). Job burnout. <em>Annual Review of Psychology, 52</em>(1), 397–422. https://doi.org/10.1146/annurev.psych.52.1.397</li>
+            <li>Maslach, C., &amp; Jackson, S. E. (1981). The measurement of experienced burnout. <em>Journal of Occupational Behavior, 2</em>(2), 99–113. https://doi.org/10.1002/job.4030020205</li>
+            <li>Maslach, C., &amp; Leiter, M. P. (2016). Understanding the burnout experience: Recent research and its implications for psychiatry. <em>World Psychiatry, 15</em>(2), 103–111. https://doi.org/10.1002/wps.20311</li>
+            <li>Mastenbroek, N. J. J. M., Jaarsma, A. D. C., Scherpbier, A. J. J. A., Van Beukelen, P., &amp; Demerouti, E. (2014). Burnout and engagement, and its predictors in young veterinary professionals: The influence of gender. <em>Veterinary Record, 174</em>(6), Article 144. https://doi.org/10.1136/vr.101762</li>
+            <li>Salvagioni, D. A. J., Melanda, F. N., Mesas, A. E., González, A. D., Gabani, F. L., &amp; Andrade, S. M. (2017). Physical, psychological and occupational consequences of job burnout: A systematic review of prospective studies. <em>PLoS ONE, 12</em>(10), e0185781. https://doi.org/10.1371/journal.pone.0185781</li>
+            <li>Schwerdtfeger, K. A., Bahramsoltani, M., Lahrgang, P., &amp; Glaesmer, H. (2020). Burnout, depression and suicidal ideation in German veterinarians. <em>Veterinary Record, 186</em>(15), Article 485. https://doi.org/10.1136/vr.105437</li>
+            <li>Sharda, R., Delen, D., &amp; Turban, E. (2020). <em>Analytics, data science, &amp; artificial intelligence: Systems for decision support</em> (11th ed.). Pearson.</li>
+            <li>Siegrist, J. (1996). Adverse health effects of high-effort/low-reward conditions. <em>Journal of Occupational Health Psychology, 1</em>(1), 27–41. https://doi.org/10.1037/1076-8998.1.1.27</li>
+            <li>World Health Organization. (2019). <em>Burn-out an occupational phenomenon: International Classification of Diseases (ICD-11).</em> https://www.who.int/standards/classifications/frequently-asked-questions/burn-out-an-occupational-phenomenon</li>
+          </ul>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════ ANEXOS -->
+        <section>
+          <h1>Anexos</h1>
+
+          <h2>Anexo I: Acceso al repositorio y reproducción del proyecto</h2>
+          <p>Repositorio oficial del proyecto en GitHub: <a href="https://github.com/davidmejiacascante/G11_TFM_NEXT_2026" target="_blank">https://github.com/davidmejiacascante/G11_TFM_NEXT_2026</a></p>
+          <h3>Estructura del repositorio</h3>
+          <ul>
+            <li><strong>dashboard/</strong> – Archivos desarrollados en Tableau Desktop.</li>
+            <li><strong>docs/</strong> – Copia digital del documento escrito del TFM y documentación complementaria.</li>
+            <li><strong>python-TFM/notebooks/</strong>
+              <ul>
+                <li><em>dashboard.ipynb</em> – Genera el archivo de datos utilizado como fuente para Tableau.</li>
+                <li><em>G11_EDA.ipynb</em> – Proceso completo de análisis exploratorio de datos (EDA). Genera <code>germany.veterinarians.csv</code>. Debe ejecutarse primero.</li>
+                <li><em>G11_ML.ipynb</em> – Desarrollo completo de los modelos de Machine Learning.</li>
+              </ul>
+            </li>
+          </ul>
+          <h3>Procedimiento de instalación y ejecución</h3>
+          <p><strong>Requisitos previos:</strong> Visual Studio Code, Python 3.11 o superior, extensión Jupyter para VS Code, Git.</p>
+          <pre>git clone https://github.com/davidmejiacascante/G11_TFM_NEXT_2026.git
+cd G11_TFM_NEXT_2026
+
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# Linux/MacOS
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+code .</pre>
+          <p>Orden de ejecución recomendado: <code>G11_EDA.ipynb</code> → <code>dashboard.ipynb</code> → <code>G11_ML.ipynb</code></p>
+
+          <h2>Anexo II: Dashboard en Tableau</h2>
+          <p><a href="https://public.tableau.com/views/TFM_G11/VistaGeneral?:language=en-US&amp;publish=yes&amp;:sid=&amp;:redirect=auth&amp;:display_count=n&amp;:origin=viz_share_link" target="_blank">Dashboard Análisis de Burnout Grupo 11 para el TFM</a></p>
+
+          <h2>Anexo III: Implementación de BurnoutGuard en cloud</h2>
+          <p>Para una futura implementación organizacional de BurnoutGuard se consideran dos escenarios principales.</p>
+          <h3>Escenario A: Empresa nueva (Greenfield)</h3>
+          <p>En un escenario Greenfield, BurnoutGuard puede diseñarse sin dependencias tecnológicas heredadas. La flexibilidad característica de este escenario favorece plataformas con capacidades maduras de analítica serverless y tiempos reducidos de adopción. Según Synergy Research Group (2025), AWS, Azure y Google concentran aproximadamente el 63% del gasto mundial en infraestructura cloud, con participaciones cercanas al 29%, 20% y 13% respectivamente.</p>
+          <h3>Escenario B: Empresa existente (Brownfield) – Escenario seleccionado</h3>
+          <p>En un escenario Brownfield, la prioridad es la selección del proveedor tecnológicamente viable dentro del contexto organizacional existente. La arquitectura propuesta fue diseñada para un escenario Brownfield utilizando Microsoft Azure como proveedor cloud principal.</p>
+          <p>La arquitectura diseñada incorpora los siguientes componentes: Azure Data Factory (ingesta batch y orquestación), Azure Data Lake Storage Gen2 (almacenamiento Bronze/Raw y Silver/Curated), Azure Databricks (ETL, EDA e ingeniería de características), Azure Synapse Analytics (capa Gold/Serving para consultas SQL y BI), Azure Machine Learning (entrenamiento, registro de modelos y MLOps), Managed Online Endpoint (inferencia) y Power BI (dashboards para Recursos Humanos y liderazgo).</p>
+          <p>Estimación mensual aproximada para una empresa mediana: entre USD $500 y USD $2,500 mensuales, dependiendo principalmente del uso de cómputo analítico y observabilidad.</p>
+          <p><strong>Estrategias de optimización:</strong> uso de auto terminate en clústeres de Databricks, preferencia por Synapse Serverless en escenarios de exploración ligera, pausa automática de pools dedicados fuera de horario operativo, e implementación de prácticas FinOps mediante presupuestos, alertas y etiquetado de costos.</p>
+
+          <h2>Anexo IV: Dashboard en Tableau – Descripción detallada</h2>
+          <h3>Diccionario de variables</h3>
+          <table>
+            <thead><tr><th>Variable</th><th>Tipo</th><th>Categoría / Codificación</th></tr></thead>
+            <tbody>
+              <tr><td>Gender</td><td>Categórica nominal dicotómica</td><td>1 = male, 2 = female</td></tr>
+              <tr><td>birth year</td><td>Numérica discreta; transformada a ordinal por grupos etarios</td><td>Se agrupó en: 22–29, 30–39, 40–49, 50–59, 60–69</td></tr>
+              <tr><td>status of employment</td><td>Categórica nominal politómica</td><td>1=self-employed, 2=employed, 3=unemployed by choice, 4=currently looking for a job, 5=parental leave, 6=working in a nonveterinarian field, 7=retired, 8=incapacitated for employment</td></tr>
+              <tr><td>field of work</td><td>Categórica nominal politómica</td><td>1=small animal medicine, 2=horses, 3=farm animals, 4=mixed practice, 5=food hygiene, 6=food hygiene in slaughterhouse, 7=industry R&amp;D, 8=industry technical service, 9=industry field service, 10=public health, 11=research, 12=university, 13=zoo animals, 14=other</td></tr>
+              <tr><td>federal state</td><td>Categórica nominal politómica</td><td>1=Baden-Württemberg, 2=Bavaria, 3=Berlin, 4=Brandenburg, 5=Bremen, 6=Hamburg, 7=Hessen, 8=Mecklenburg-Vorpommern, 9=Niedersachsen, 10=North Rhine-Westphalia, 11=Rheinland-Pfalz, 12=Saarland, 13=Saxony, 14=Saxony-Anhalt, 15=Schleswig-Holstein, 16=Thuringia</td></tr>
+              <tr><td>community size</td><td>Categórica ordinal</td><td>&lt;5,000, &lt;20,000, &lt;100,000, &gt;100,000 habitantes</td></tr>
+              <tr><td>income</td><td>Categórica ordinal</td><td>&lt;€1,000, &lt;€2,000, &lt;€3,000, &lt;€4,000, &lt;€5,000, &gt;€5,000</td></tr>
+              <tr><td>working hours</td><td>Variable mixta; luego ordinal agrupada</td><td>0–20, 21–40, 41–60, 61–80, &gt;80 horas/semana</td></tr>
+              <tr><td>ERI_1 – ERI_10</td><td>Categórica ordinal Likert 4 niveles</td><td>1=strongly disagree, 2=disagree, 3=agree, 4=strongly agree</td></tr>
+              <tr><td>CBI_01 – CBI_06 / Burnout Score</td><td>Categórica ordinal Likert; Burnout Score: binaria</td><td>CBI: 1=Siempre, 2=A menudo, 3=A veces, 4=Rara vez, 5=Nunca. Burnout Score: 1=con burnout, 0=sin burnout</td></tr>
+            </tbody>
+          </table>
+          <p><em>Tabla 6 – Diccionario de variables. Fuente: elaboración propia.</em></p>
+
+          <h3>Campos calculados en Tableau</h3>
+          <pre>// Clasificación Burnout
+IF [Burnout Score] = 1 THEN "Con Burnout"
+ELSE "Sin Burnout"
+END
+
+// Horas de Trabajo
+IF [Working Hours] &lt; 20 THEN "Less than 20"
+ELSEIF [Working Hours] &lt;= 41 THEN "21-40"
+ELSEIF [Working Hours] &lt;= 61 THEN "41-60"
+ELSEIF [Working Hours] &lt;= 81 THEN "61-80"
+ELSE "Over 80"
+END
+
+// Rango de Edad
+IF [Age] &lt; 25 THEN "Under 25"
+ELSEIF [Age] &lt;= 40 THEN "25-40"
+ELSEIF [Age] &lt;= 55 THEN "41-55"
+ELSEIF [Age] &lt;= 65 THEN "56-65"
+ELSE "65+"
+END
+
+// Porcentaje de Burnout
+SUM([Burnout Score])/TOTAL(COUNT([Burnout Score]))
+
+// Registros Totales
+COUNT([germany.dashboard.csv])</pre>
+
+          <h3>Principales hallazgos</h3>
+          <p>El análisis muestra que el burnout no se distribuye de manera uniforme, sino que presenta variaciones al observarlo por variables laborales, demográficas y contextuales. Se identifican diferencias por área de trabajo y estatus de empleo; la diferencia de géneros fue representativa (13.6% hombres vs. 39.7% mujeres); Bavaria es el estado con más casos de burnout (22.7%); el rango de edad de 41 a 55 años presenta el mayor porcentaje de casos positivos. El promedio de horas trabajadas no parece estar afectando de manera representativa los resultados.</p>
+          <p>Estos resultados deben entenderse como hallazgos exploratorios. El dashboard no busca establecer causalidad, sino facilitar la identificación de patrones que puedan orientar decisiones preventivas y futuras líneas de investigación.</p>
+
+          <p><a href="https://public.tableau.com/views/TFM_G11/VistaGeneral?:language=en-US&amp;publish=yes&amp;:sid=&amp;:redirect=auth&amp;:display_count=n&amp;:origin=viz_share_link" target="_blank">Dashboard Análisis de Burnout Grupo 11 para el TFM →</a></p>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <span>© 2026 BurnoutGuard · G11 TFM Next Educación. Todos los derechos reservados.</span>
+  </footer>
+
+  <script>
+    const nav = document.getElementById("dynamicNav");
+    const content = document.querySelector(".content-inner");
+    const headings = Array.from(content.querySelectorAll("h1, h2, h3, h4"));
+
+    function slugify(text, index) {
+      return (
+        text.toLowerCase().trim()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/\s+/g, "-")
+          .replace(/-+/g, "-") || `heading-${index}`
+      );
+    }
+
+    headings.forEach((heading, index) => {
+      if (!heading.id) {
+        heading.id = `${slugify(heading.textContent, index)}-${index}`;
+      }
+    });
+
+    const groupedHeadings = [];
+    let currentGroup = null;
+
+    headings.forEach((heading) => {
+      const level = Number(heading.tagName.substring(1));
+      if (level === 1) {
+        currentGroup = { main: heading, children: [] };
+        groupedHeadings.push(currentGroup);
+      } else if (currentGroup) {
+        currentGroup.children.push(heading);
+      }
+    });
+
+    function scrollToHeading(id) {
+      const target = document.getElementById(id);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function closeOtherGroups(activeGroup) {
+      document.querySelectorAll(".nav-group").forEach((group) => {
+        if (group !== activeGroup) {
+          group.classList.remove("open");
+          group.querySelector(".nav-main")?.classList.remove("active");
+        }
+      });
+    }
+
+    function clearActiveSubItems() {
+      document.querySelectorAll(".nav-subitem").forEach((item) => {
+        item.classList.remove("active");
+      });
+    }
+
+    groupedHeadings.forEach((group, index) => {
+      const groupItem = document.createElement("li");
+      groupItem.className = "nav-group";
+      if (index === 0) groupItem.classList.add("open");
+
+      const mainButton = document.createElement("button");
+      mainButton.type = "button";
+      mainButton.className = "nav-main";
+      mainButton.textContent = group.main.textContent;
+      if (index === 0) mainButton.classList.add("active");
+
+      mainButton.addEventListener("click", () => {
+        const isOpen = groupItem.classList.contains("open");
+        closeOtherGroups(groupItem);
+        groupItem.classList.toggle("open", !isOpen);
+        mainButton.classList.toggle("active", !isOpen);
+        clearActiveSubItems();
+        scrollToHeading(group.main.id);
+      });
+
+      const subList = document.createElement("ul");
+      subList.className = "nav-sublist";
+
+      group.children.forEach((child) => {
+        const childLevel = Number(child.tagName.substring(1));
+        const subItem = document.createElement("li");
+        const subButton = document.createElement("button");
+        subButton.type = "button";
+        subButton.className = `nav-subitem level-${childLevel}`;
+        subButton.textContent = child.textContent;
+        subButton.addEventListener("click", () => {
+          clearActiveSubItems();
+          subButton.classList.add("active");
+          scrollToHeading(child.id);
+        });
+        subItem.appendChild(subButton);
+        subList.appendChild(subItem);
+      });
+
+      groupItem.appendChild(mainButton);
+      groupItem.appendChild(subList);
+      nav.appendChild(groupItem);
+    });
+  </script>
+</body>
+</html>

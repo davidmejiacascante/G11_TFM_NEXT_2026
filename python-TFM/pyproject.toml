@@ -1,0 +1,85 @@
+﻿# Build system
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-tfm"
+version = "0.1.0"
+description = "Healthcare worker burnout analysis using CBI scales"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+authors = [
+    { name = "David Mejia", email = "david.mejia.cascante@gmail.com" }
+]
+
+# Runtime dependencies (keep in sync with requirements.txt)
+dependencies = [
+    "pandas==3.0.3",
+    "numpy==2.4.6",
+    "matplotlib==3.10.9",
+    "seaborn==0.13.2",
+    "scikit-learn==1.8.0",
+    "scipy==1.17.1",
+    "statsmodels",
+    "plotly==5.24.1",
+    "imbalanced-learn==0.14.1",
+    "python-dateutil==2.9.0",
+    "colorama==0.4.6",
+    "pillow==12.2.0",
+    "jupyter-client==8.8.0",
+    "ipykernel==7.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "ruff",
+    "mypy",
+]
+
+[project.urls]
+homepage = "https://github.com/user/my_project"
+issues = "https://github.com/user/my_project/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+skip-string-normalization = true
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "W"]
+ignore = ["E203"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["python-tfm"]
+
+[tool.pytest.ini-options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.isort]
+profile = "black"
+skip = ["data/raw", "notebooks"]
+
+[tool.my_project.paths]
+data = "data"
+raw = "data/raw"
+interim = "data/interim"
+processed = "data/processed"
+models = "models"
+reports = "reports"
+
+[tool.my_project.constants]
+seed = 42
+target = "Burnout_Score"
+train_test_split = 0.2
